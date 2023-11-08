@@ -3,6 +3,8 @@ from bpy.app.handlers import persistent
 from bpy.types import PropertyGroup
 from bpy.props import BoolProperty, PointerProperty, BoolVectorProperty
 
+C_CLEAN_UP_AXIS = [False, False, False]
+
 
 def get_lock_axis() -> list[bool, bool, bool]:
     # get lock axis
@@ -39,19 +41,17 @@ def set_keymap(axis: list):
         for km in keymaps:
             # prevent from uv editor
             if km.name == "UV Editor":
-                if not axis_lock_effect.uv:continue
+                if not axis_lock_effect.uv: continue
 
-            if axis_lock_effect.translate:
-                set_km_props(km, "transform.translate", "constraint_axis", axis)
-            if axis_lock_effect.rotate:
-                set_km_props(km, "transform.rotate", "constraint_axis", axis)
-            if axis_lock_effect.scale:
-                set_km_props(km, "transform.resize", "constraint_axis", axis)
+            set_km_props(km, "transform.translate", "constraint_axis",
+                         axis if axis_lock_effect.translate else C_CLEAN_UP_AXIS)
+            set_km_props(km, "transform.rotate", "constraint_axis",
+                         axis if axis_lock_effect.rotate else C_CLEAN_UP_AXIS)
+            set_km_props(km, "transform.resize", "constraint_axis", axis if axis_lock_effect.scale else C_CLEAN_UP_AXIS)
 
 
 def cleanup_keymap():
-    axis = [False, False, False]
-    set_keymap(axis)
+    set_keymap(C_CLEAN_UP_AXIS)
 
 
 @persistent
