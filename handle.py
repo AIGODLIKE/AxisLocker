@@ -121,6 +121,8 @@ def register():
 
 
 def unregister():
+    cleanup_keymap()
+
     bpy.types.VIEW3D_HT_tool_header.remove(draw_lock_axis)
     bpy.app.handlers.load_post.remove(load_file_init)
 
@@ -130,5 +132,3 @@ def unregister():
     bpy.utils.unregister_class(LockAxisProps)
     bpy.utils.unregister_class(TransformEffectProps)
     bpy.utils.unregister_class(AL_PT_LockAxis)
-
-    cleanup_keymap()
