@@ -37,6 +37,9 @@ def set_keymap(axis: list):
 
     for keymaps in keymaps_list:
         for km in keymaps:
+            # prevent from uv editor
+            if axis_lock_effect.uv and km.name == "UV Editor": continue
+
             if axis_lock_effect.translate:
                 set_km_props(km, "transform.translate", "constraint_axis", axis)
             if axis_lock_effect.rotate:
@@ -70,6 +73,8 @@ class TransformEffectProps(PropertyGroup):
     rotate: BoolProperty(name="Rotate", default=False, update=update_axis)
     scale: BoolProperty(name="Scale", default=False, update=update_axis)
 
+    uv: BoolProperty(name="UV", default=False)
+
 
 class AL_PT_LockAxis(bpy.types.Panel):
     bl_label = "轴向锁定"
@@ -86,6 +91,7 @@ class AL_PT_LockAxis(bpy.types.Panel):
         col.prop(axis_lock_effect, "translate")
         col.prop(axis_lock_effect, "rotate")
         col.prop(axis_lock_effect, "scale")
+        col.prop(axis_lock_effect, "uv")
 
 
 def draw_lock_axis(self, context):
