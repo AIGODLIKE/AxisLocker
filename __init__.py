@@ -5,8 +5,8 @@ bl_info = {
     "version": (0, 1),
     "category": "AIGODLIKE",
     "support": "COMMUNITY",
-    "doc_url": "",
-    "tracker_url": "",
+    "doc_url": "https://github.com/AIGODLIKE/AxisLocker",
+    "tracker_url": "https://github.com/AIGODLIKE/AxisLocker/issues",
     "description": "Provide a way to lock axis in 3D View with transform tools.",
     "location": "3D View > Header",
 }
